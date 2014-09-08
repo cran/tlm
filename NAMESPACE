@@ -1,0 +1,79 @@
+export(
+tlm,
+MY,
+effectInfo,
+effect
+)
+
+import(stats, boot)
+importFrom(utils, data)
+
+S3method(print, tlm)
+S3method(plot, tlm)
+S3method(summary, tlm)
+S3method(print, summary.tlm)
+
+S3method(print, MY)
+
+S3method(print, effectInfo)
+
+S3method(print, effect)
+
+# not exported:
+# betaCIContinuousExactTrans
+# bijectivityback
+# bijectivityforward
+# checkc
+# checkfornumber
+# checkfornumberorvector
+# checkforvector
+# checknbootseed
+# checknpoints
+# checkq
+# checkr
+# effectboot
+# effectContinuous
+# effectContinuousGeneral
+# effectContinuousmod1
+# effectContinuousmod10
+# effectContinuousmod12
+# effectContinuousmod3
+# effectContinuousmod5
+# effectContinuousmod6
+# effectContinuousmod7
+# effectContinuousmod9
+# effectContinuousReduxmod1
+# effectContinuousReduxmod10
+# effectContinuousReduxmod12
+# effectContinuousReduxmod3
+# effectContinuousReduxmod5
+# effectContinuousReduxmod6
+# effectContinuousReduxmod7
+# effectContinuousReduxmod9
+# effectFactor
+# effectFactorBoot
+# effectFactorExactTrans
+# effectFactormod11
+# effectFactormod2
+# effectFactormod4
+# effectFactormod8
+# effectInfomod0
+# effectInfomod1
+# effectInfomod2
+# effectInfomod3
+# effectInfomod4
+# effectInfomod5
+# effectInfomod6
+# effectInfomod7
+# effectInfomod8
+# effectInfomod9
+# effectInfomod10
+# effectInfomod11
+# effectInfomod12
+# geteffectx1x2
+# getL
+# getM
+# modelType
+# powerTransform
+# powerUntransform
+# printPreamble
