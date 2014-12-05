@@ -68,11 +68,10 @@
 
 
 
-\usepackage{Sweave}
+\usepackage{Sweave2}
 \begin{document}
-<<echo = F>>=
+<<echo = F, eval = F>>=
 #options(width = 100, continue = "  ")
-options(width = 100, continue = "  ")
 @
 \maketitle
 %\begin{center}
@@ -791,7 +790,7 @@ effect(modcot2, q = 10)
 
 %\bibliography{bayesGen}
 
-\bibitem{Barreratlm2014} Barrera-G\'omez J, Basaga\~na X. Interpretation of effects in linear, logistic and Poisson models with transformed variables: guidance for practice and software. [submitted].
+\bibitem{Barreratlm2014} Barrera-G\'omez J, Basaga\~na X. Models with transformed variables: interpretation and software. \emph{Epidemiology} (in press).
 
 \bibitem{Rivera2013} Rivera M, Basaga\~na X, Aguilera I, Foraster M, Agis D, de Groot E, Perez L, Mendez MA, Bouso L, Targa J, Ramos R, Sala J, Marrugat J, Elosua R, K\"unzli N. Association between long-term exposure to traffic-related air pollution and subclinical atherosclerosis: The REGICOR study. \emph{Environmental Health Perspectives} 2013;121(2):223-230. DOI:10.1289/ehp.1205146.
 
@@ -804,14 +803,6 @@ effect(modcot2, q = 10)
 \bibitem{Searle1980} Searle SR, Speed FM, Milliken GA. Population marginal means in the linear model: An alternative to least squares means. Amer Stat. 1980;34(4):216-221.
 
 \bibitem{Elswick1997} Elswick RK Jr, Schwartz PF, Welsh JA. Interpretation of the odds ratio from logistic regression after a transformation of the covariate vector. Stat Med. 1997;16(15):1695-1703.
-
-
-
-
-
-
-
-
 
 \end{thebibliography}
 

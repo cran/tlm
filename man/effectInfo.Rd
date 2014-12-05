@@ -22,9 +22,8 @@ effectInfo(object)
 \item{furtherinfo}{further information about how to interpret effects.}
 }
 \references{
-Barrera-Gomez J, Basagana X. Interpretation of effects in linear,
-logistic and Poisson models with transformed variables: guidance for
-practice and software. (submitted).
+Barrera-Gomez J, Basagana X. Models with transformed variables:
+interpretation and software. \emph{Epidemiology} (in press).
 }
 \author{Barrera-Gomez J and Basagana X.}
 

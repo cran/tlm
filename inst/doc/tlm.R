@@ -2,56 +2,55 @@
 ### Encoding: UTF-8
 
 ###################################################
-### code chunk number 1: tlm.Rnw:73-75
+### code chunk number 1: tlm.Rnw:73-74 (eval = FALSE)
 ###################################################
-#options(width = 100, continue = "  ")
-options(width = 100, continue = "  ")
+## #options(width = 100, continue = "  ")
 
 
 ###################################################
-### code chunk number 2: tlm.Rnw:114-115 (eval = FALSE)
+### code chunk number 2: tlm.Rnw:113-114 (eval = FALSE)
 ###################################################
 ## library(tlm)
 
 
 ###################################################
-### code chunk number 3: tlm.Rnw:117-118
+### code chunk number 3: tlm.Rnw:116-117
 ###################################################
 require(tlm)
 
 
 ###################################################
-### code chunk number 4: tlm.Rnw:121-122 (eval = FALSE)
+### code chunk number 4: tlm.Rnw:120-121 (eval = FALSE)
 ###################################################
 ## vignette("tlm")
 
 
 ###################################################
-### code chunk number 5: tlm.Rnw:125-126 (eval = FALSE)
+### code chunk number 5: tlm.Rnw:124-125 (eval = FALSE)
 ###################################################
 ## help(package = "tlm")
 
 
 ###################################################
-### code chunk number 6: tlm.Rnw:139-140 (eval = FALSE)
+### code chunk number 6: tlm.Rnw:138-139 (eval = FALSE)
 ###################################################
 ## ?tlm
 
 
 ###################################################
-### code chunk number 7: tlm.Rnw:165-166 (eval = FALSE)
+### code chunk number 7: tlm.Rnw:164-165 (eval = FALSE)
 ###################################################
 ## ?MY
 
 
 ###################################################
-### code chunk number 8: tlm.Rnw:193-194 (eval = FALSE)
+### code chunk number 8: tlm.Rnw:192-193 (eval = FALSE)
 ###################################################
 ## ?effect
 
 
 ###################################################
-### code chunk number 9: tlm.Rnw:243-247
+### code chunk number 9: tlm.Rnw:242-246
 ###################################################
 data(imt)
 dim(imt)
@@ -60,50 +59,50 @@ summary(imt)
 
 
 ###################################################
-### code chunk number 10: tlm.Rnw:252-253
+### code chunk number 10: tlm.Rnw:251-252
 ###################################################
 modimt <- tlm(y = logimt, x = age, data = imt, ypow = 0)
 
 
 ###################################################
-### code chunk number 11: tlm.Rnw:256-257
+### code chunk number 11: tlm.Rnw:255-256
 ###################################################
 modimt
 
 
 ###################################################
-### code chunk number 12: tlm.Rnw:261-262
+### code chunk number 12: tlm.Rnw:260-261
 ###################################################
 summary(modimt)
 
 
 ###################################################
-### code chunk number 13: tlm.Rnw:266-267
+### code chunk number 13: tlm.Rnw:265-266
 ###################################################
 MY(modimt)
 
 
 ###################################################
-### code chunk number 14: tlm.Rnw:271-272
+### code chunk number 14: tlm.Rnw:270-271
 ###################################################
 MY(modimt, npoints = 3)
 
 
 ###################################################
-### code chunk number 15: tlm.Rnw:276-278
+### code chunk number 15: tlm.Rnw:275-277
 ###################################################
 q13 <- quantile(imt$age, probs = c(1, 3)/4)
 MY(modimt, x = q13)
 
 
 ###################################################
-### code chunk number 16: tlm.Rnw:282-283
+### code chunk number 16: tlm.Rnw:281-282
 ###################################################
 MY(modimt, x = q13, space = "transformed")
 
 
 ###################################################
-### code chunk number 17: tlm.Rnw:287-289 (eval = FALSE)
+### code chunk number 17: tlm.Rnw:286-288 (eval = FALSE)
 ###################################################
 ## plot(modimt, type = "transformed", observed = T, xname = "Age (years)", yname = "IMT")
 ## plot(modimt, observed = T, xname = "Age (years)", yname = "IMT (mm)")
@@ -122,7 +121,7 @@ MY(modimt, x = q13, space = "transformed")
 
 
 ###################################################
-### code chunk number 20: tlm.Rnw:300-303
+### code chunk number 20: tlm.Rnw:299-302
 ###################################################
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 plot(modimt, type = "transformed", observed = T, xname = "Age (years)", yname = "IMT")
@@ -136,13 +135,13 @@ plot(modimt, observed = T, xname = "Age (years)", yname = "IMT (mm)")
 
 
 ###################################################
-### code chunk number 22: tlm.Rnw:318-319
+### code chunk number 22: tlm.Rnw:317-318
 ###################################################
 effectInfo(modimt)
 
 
 ###################################################
-### code chunk number 23: tlm.Rnw:324-327
+### code chunk number 23: tlm.Rnw:323-326
 ###################################################
 #par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 par(las = 1, mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
@@ -150,20 +149,20 @@ plot(modimt, type = "diagnosis")
 
 
 ###################################################
-### code chunk number 24: tlm.Rnw:337-338
+### code chunk number 24: tlm.Rnw:336-337
 ###################################################
 effect(modimt)
 
 
 ###################################################
-### code chunk number 25: tlm.Rnw:342-344
+### code chunk number 25: tlm.Rnw:341-343
 ###################################################
 q123 <- quantile(imt$age, probs = 1:3/4)   # quartiles
 effect(modimt, x1 = q123)
 
 
 ###################################################
-### code chunk number 26: tlm.Rnw:382-386
+### code chunk number 26: tlm.Rnw:381-385
 ###################################################
 data(cotinine)
 dim(cotinine)
@@ -172,19 +171,19 @@ summary(cotinine)
 
 
 ###################################################
-### code chunk number 27: tlm.Rnw:390-391
+### code chunk number 27: tlm.Rnw:389-390
 ###################################################
 modcot <- tlm(y = weight, x = logcotinine, data = cotinine, xpow = 0)
 
 
 ###################################################
-### code chunk number 28: tlm.Rnw:394-395
+### code chunk number 28: tlm.Rnw:393-394
 ###################################################
 summary(modcot)
 
 
 ###################################################
-### code chunk number 29: tlm.Rnw:399-401 (eval = FALSE)
+### code chunk number 29: tlm.Rnw:398-400 (eval = FALSE)
 ###################################################
 ## plot(modcot, type = "transformed", observed = T, xname = "Cotinine", yname = "weight (kg)")
 ## plot(modcot, xname = "Cotinine (ng/ml)", yname = "weight (kg)")
@@ -203,7 +202,7 @@ summary(modcot)
 
 
 ###################################################
-### code chunk number 32: tlm.Rnw:412-415
+### code chunk number 32: tlm.Rnw:411-414
 ###################################################
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3),  mgp = c(2.8, 0.6, 0))
 plot(modcot, type = "transformed", observed = T, xname = "Cotinine", yname = "weight (kg)")
@@ -211,32 +210,32 @@ plot(modcot, xname = "Cotinine (ng/ml)", yname = "weight (kg)")
 
 
 ###################################################
-### code chunk number 33: tlm.Rnw:423-424
+### code chunk number 33: tlm.Rnw:422-423
 ###################################################
 effectInfo(modcot)
 
 
 ###################################################
-### code chunk number 34: tlm.Rnw:428-429
+### code chunk number 34: tlm.Rnw:427-428
 ###################################################
 effect(modcot)
 
 
 ###################################################
-### code chunk number 35: tlm.Rnw:432-433
+### code chunk number 35: tlm.Rnw:431-432
 ###################################################
 effect(modcot, q = 10)
 
 
 ###################################################
-### code chunk number 36: tlm.Rnw:437-439
+### code chunk number 36: tlm.Rnw:436-438
 ###################################################
 range(cotinine$cotinine)
 effect(modcot, x1 = 100, c = 200, npoints = 4)
 
 
 ###################################################
-### code chunk number 37: tlm.Rnw:483-487
+### code chunk number 37: tlm.Rnw:482-486
 ###################################################
 data(feld1)
 dim(feld1)
@@ -245,19 +244,19 @@ summary(feld1)
 
 
 ###################################################
-### code chunk number 38: tlm.Rnw:491-492
+### code chunk number 38: tlm.Rnw:490-491
 ###################################################
 modcat <-  tlm (y = logroom, x = logmattress, z = cat, data = feld1, ypow = 0, xpow = 0)
 
 
 ###################################################
-### code chunk number 39: tlm.Rnw:495-496
+### code chunk number 39: tlm.Rnw:494-495
 ###################################################
 summary(modcat)
 
 
 ###################################################
-### code chunk number 40: tlm.Rnw:500-502 (eval = FALSE)
+### code chunk number 40: tlm.Rnw:499-501 (eval = FALSE)
 ###################################################
 ## plot(modcat, type = "transformed", observed = T, xname = "Mattress levels", yname = "living room levels")
 ## plot(modcat, xname = "Mattress levels", yname = "living room levels")
@@ -276,7 +275,7 @@ summary(modcat)
 
 
 ###################################################
-### code chunk number 43: tlm.Rnw:514-517
+### code chunk number 43: tlm.Rnw:513-516
 ###################################################
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(2.8, 0.6, 0))
 plot(modcat, type = "transformed", observed = T, xname = "Mattress levels", yname = "living room levels")
@@ -284,32 +283,32 @@ plot(modcat, xname = "Mattress levels", yname = "living room levels")
 
 
 ###################################################
-### code chunk number 44: tlm.Rnw:525-526
+### code chunk number 44: tlm.Rnw:524-525
 ###################################################
 effectInfo(modcat)
 
 
 ###################################################
-### code chunk number 45: tlm.Rnw:532-533
+### code chunk number 45: tlm.Rnw:531-532
 ###################################################
 effect(modcat)
 
 
 ###################################################
-### code chunk number 46: tlm.Rnw:537-539
+### code chunk number 46: tlm.Rnw:536-538
 ###################################################
 modcat2 <-  tlm (y = logroom, x = cat, data = feld1, ypow = 0)
 modcat2
 
 
 ###################################################
-### code chunk number 47: tlm.Rnw:543-544
+### code chunk number 47: tlm.Rnw:542-543
 ###################################################
 MY(modcat2)
 
 
 ###################################################
-### code chunk number 48: tlm.Rnw:548-549
+### code chunk number 48: tlm.Rnw:547-548
 ###################################################
 effect(modcat2)
 
@@ -321,7 +320,7 @@ effect(modcat2)
 
 
 ###################################################
-### code chunk number 50: tlm.Rnw:559-564
+### code chunk number 50: tlm.Rnw:558-563
 ###################################################
 m <- matrix(0, nrow = 2, ncol = 4)
 m[, 2:3] <- 1
@@ -331,7 +330,7 @@ plot(modcat2, yname = "room levels")
 
 
 ###################################################
-### code chunk number 51: tlm.Rnw:583-587
+### code chunk number 51: tlm.Rnw:582-586
 ###################################################
 data(glucose)
 dim(glucose)
@@ -340,20 +339,20 @@ summary(glucose)
 
 
 ###################################################
-### code chunk number 52: tlm.Rnw:591-593
+### code chunk number 52: tlm.Rnw:590-592
 ###################################################
 modglucose <- tlm(y = inv2glu, x = inv12tri, data = glucose, ypow = -2, xpow = -1/2)
 summary(modglucose)
 
 
 ###################################################
-### code chunk number 53: tlm.Rnw:597-598
+### code chunk number 53: tlm.Rnw:596-597
 ###################################################
 MY(modglucose)
 
 
 ###################################################
-### code chunk number 54: tlm.Rnw:601-603 (eval = FALSE)
+### code chunk number 54: tlm.Rnw:600-602 (eval = FALSE)
 ###################################################
 ## plot(modglucose, type = "transformed", observed = T, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
 ## plot(modglucose, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
@@ -372,7 +371,7 @@ MY(modglucose)
 
 
 ###################################################
-### code chunk number 57: tlm.Rnw:614-617
+### code chunk number 57: tlm.Rnw:613-616
 ###################################################
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(3.6, 0.6, 0))
 plot(modglucose, type = "transformed", observed = T, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
@@ -380,13 +379,13 @@ plot(modglucose, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
 
 
 ###################################################
-### code chunk number 58: tlm.Rnw:625-626
+### code chunk number 58: tlm.Rnw:624-625
 ###################################################
 effectInfo(modglucose)
 
 
 ###################################################
-### code chunk number 59: tlm.Rnw:629-633
+### code chunk number 59: tlm.Rnw:628-632
 ###################################################
 # 2.5 and 97.5 percentiles of trigli (for text):
 summtrigli <- quantile(glucose$trigly, probs = c(2.5, 25, 50, 75, 97.5) / 100)
@@ -395,7 +394,7 @@ trigli97.5 <- round(as.numeric(summtrigli[5]), 1)
 
 
 ###################################################
-### code chunk number 60: tlm.Rnw:637-642
+### code chunk number 60: tlm.Rnw:636-641
 ###################################################
 # Effects for an additive change in triglycerides level:
 xc <- 50 * (1:5)
@@ -405,7 +404,7 @@ effectXdiff
 
 
 ###################################################
-### code chunk number 61: tlm.Rnw:676-681
+### code chunk number 61: tlm.Rnw:675-680
 ###################################################
 # Effects for an percent change in triglycerides level:
 xq <- 50 * 1.5^(0:4)
@@ -415,25 +414,25 @@ effectXperc
 
 
 ###################################################
-### code chunk number 62: tlm.Rnw:725-726
+### code chunk number 62: tlm.Rnw:724-725
 ###################################################
 modcot2 <- tlm(y = underweight, x = logcotinine, data = cotinine, xpow = 0, family = binomial)
 
 
 ###################################################
-### code chunk number 63: tlm.Rnw:729-730
+### code chunk number 63: tlm.Rnw:728-729
 ###################################################
 summary(modcot2)
 
 
 ###################################################
-### code chunk number 64: tlm.Rnw:734-735
+### code chunk number 64: tlm.Rnw:733-734
 ###################################################
 MY(modcot2)
 
 
 ###################################################
-### code chunk number 65: tlm.Rnw:739-741 (eval = FALSE)
+### code chunk number 65: tlm.Rnw:738-740 (eval = FALSE)
 ###################################################
 ## plot(modcot2, type = "transformed", xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
 ## plot(modcot2, xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
@@ -452,7 +451,7 @@ MY(modcot2)
 
 
 ###################################################
-### code chunk number 68: tlm.Rnw:753-756
+### code chunk number 68: tlm.Rnw:752-755
 ###################################################
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(2.8, 0.6, 0))
 plot(modcot2, type = "transformed", xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
@@ -460,19 +459,19 @@ plot(modcot2, xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
 
 
 ###################################################
-### code chunk number 69: tlm.Rnw:764-765
+### code chunk number 69: tlm.Rnw:763-764
 ###################################################
 effectInfo(modcot2)
 
 
 ###################################################
-### code chunk number 70: tlm.Rnw:768-769
+### code chunk number 70: tlm.Rnw:767-768
 ###################################################
 effect(modcot2)
 
 
 ###################################################
-### code chunk number 71: tlm.Rnw:772-773
+### code chunk number 71: tlm.Rnw:771-772
 ###################################################
 effect(modcot2, q = 10)
 

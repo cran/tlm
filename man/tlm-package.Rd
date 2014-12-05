@@ -9,8 +9,8 @@
 \tabular{ll}{
 Package: \tab tlm\cr
 Type: \tab Package\cr
-Version: \tab 0.1.2\cr
-Date: \tab 2014-09-08\cr
+Version: \tab 0.1.3\cr
+Date: \tab 2014-12-05\cr
 License: \tab GPL (>=2)\cr
 URL: \tab http://www.creal.cat/xbasagana/software.html\cr
 LazyLoad: \tab yes\cr
@@ -23,9 +23,8 @@ Jose Barrera-Gomez and Xavier Basagana
 Maintainer: Jose Barrera-Gomez <jbarrera@creal.cat>
 }
 \references{
-Barrera-Gomez J, Basagana X. Interpretation of effects in linear,
-logistic and Poisson models with transformed variables: guidance for
-practice and software. (submitted). 
+Barrera-Gomez J, Basagana X. Models with transformed variables:
+interpretation and software. \emph{Epidemiology} (in press). 
 }
 \keyword{ package }
 

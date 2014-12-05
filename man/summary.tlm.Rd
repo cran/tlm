@@ -21,9 +21,8 @@ Essentially, the output of \code{summary.lm} or \code{summary.glm} is displayed.
 \item{summary}{the summary of the fitted model provide by \code{summary.lm} (for gaussian response) or \code{summary.glm} (otherwise).}
 }
 \references{
-Barrera-Gomez J, Basagana X. Interpretation of effects in linear,
-logistic and Poisson models with transformed variables: guidance for
-practice and software. (submitted).
+Barrera-Gomez J, Basagana X. Models with transformed variables:
+interpretation and software. \emph{Epidemiology} (in press).
 }
 \author{Barrera-Gomez J and Basagana X.}
 
