@@ -1,4 +1,16 @@
 ====================================
+CHANGES IN tlm 0.1.4 (2016-05-02):
+====================================
+
+   DOCUMENTATION:
+
+      * The reference: 'Barrera-Gomez J, Basagana X. Interpretation of effects in linear, logistic and Poisson models with transformed variables: guidance for practice and software. Epidemiology (in press).' has been updated to 'Barrera-Gomez J, Basagana X. Models with transformed variables: interpretation and software. Epidemiology. 2015;26(2):e16-17.'.
+
+   R:
+
+      * An error regarding the input of 'z' in the function tlm has been fixed.
+
+====================================
 CHANGES IN tlm 0.1.3 (2014-12-05):
 ====================================
 

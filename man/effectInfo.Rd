@@ -21,10 +21,7 @@ effectInfo(object)
 \item{effectsize}{formula for the summary effect size, if any. \code{NA} corresponds to those models for which a summary effect is not available.}
 \item{furtherinfo}{further information about how to interpret effects.}
 }
-\references{
-Barrera-Gomez J, Basagana X. Models with transformed variables:
-interpretation and software. \emph{Epidemiology} (in press).
-}
+\references{Barrera-Gomez J, Basagana X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17.}
 \author{Barrera-Gomez J and Basagana X.}
 
 \seealso{\code{\link{tlm}}, \code{\link{effect}}, \code{\link{MY}}.}

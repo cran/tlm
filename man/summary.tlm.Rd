@@ -20,10 +20,7 @@ Essentially, the output of \code{summary.lm} or \code{summary.glm} is displayed.
 \item{xpow }{the value of \code{xpow}.}
 \item{summary}{the summary of the fitted model provide by \code{summary.lm} (for gaussian response) or \code{summary.glm} (otherwise).}
 }
-\references{
-Barrera-Gomez J, Basagana X. Models with transformed variables:
-interpretation and software. \emph{Epidemiology} (in press).
-}
+\references{Barrera-Gomez J, Basagana X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17.}
 \author{Barrera-Gomez J and Basagana X.}
 
 \seealso{

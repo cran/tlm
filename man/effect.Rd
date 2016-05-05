@@ -35,10 +35,7 @@ Confidence intervals are computed by transforming the endpoints of the intervals
 \item{effect}{point estimate and confidence interval for the effect size.}
 \item{info}{information on how to interpret the effect. Used by the function \code{\link{effectInfo}}.}
 }
-\references{
-Barrera-Gomez J, Basagana X. Models with transformed variables:
-interpretation and software. \emph{Epidemiology} (in press).
-}
+\references{Barrera-Gomez J, Basagana X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17.}
 \author{Barrera-Gomez J and Basagana X.}
 
 \seealso{\code{\link{tlm}}, \code{\link{effectInfo}}, \code{\link{MY}}.}

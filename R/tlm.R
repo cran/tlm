@@ -87,7 +87,7 @@ function(y, x, z = "none", family = gaussian, data, ypow = 1, xpow = 1, ...)
    # xl <- paste("as.factor(", xl0, ")", sep = "") else xl <- xl0
   xl <- xl0
   yxl <- paste(yl, xl, sep = " ~ ")
-  zl <- deparse(substitute(z))
+  zl <- deparse(substitute(z), width.cutoff = 500L)
   if (zl == "\"none\"")
    formula <- yxl else
    {

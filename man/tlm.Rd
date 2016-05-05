@@ -35,10 +35,7 @@ The transformations already done in \code{y} and \code{x} are passed by \code{yp
 \item{ypow }{the value of \code{ypow}.}
 \item{xpow }{the value of \code{xpow}.}
 }
-\references{
-Barrera-Gomez J, Basagana X. Models with transformed variables:
-interpretation and software. \emph{Epidemiology} (in press).
-}
+\references{Barrera-Gomez J, Basagana X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17.}
 \author{Barrera-Gomez J and Basagana X.}
 
 \seealso{

@@ -9,8 +9,8 @@
 \tabular{ll}{
 Package: \tab tlm\cr
 Type: \tab Package\cr
-Version: \tab 0.1.3\cr
-Date: \tab 2014-12-05\cr
+Version: \tab 0.1.4\cr
+Date: \tab 2016-05-04\cr
 License: \tab GPL (>=2)\cr
 URL: \tab http://www.creal.cat/xbasagana/software.html\cr
 LazyLoad: \tab yes\cr
@@ -22,10 +22,8 @@ Jose Barrera-Gomez and Xavier Basagana
 
 Maintainer: Jose Barrera-Gomez <jbarrera@creal.cat>
 }
-\references{
-Barrera-Gomez J, Basagana X. Models with transformed variables:
-interpretation and software. \emph{Epidemiology} (in press). 
-}
+\references{Barrera-Gomez J, Basagana X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17.}
+
 \keyword{ package }
 
 \examples{

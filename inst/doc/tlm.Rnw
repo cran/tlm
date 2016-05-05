@@ -1,3 +1,5 @@
+
+%\VignetteEngine{knitr::knitr}
 % \VignetteIndexEntry{User's manual for the tlm package}
 \documentclass[11pt]{article}
 \usepackage{url}
@@ -7,27 +9,25 @@
 \usepackage{amsthm}
 %\usepackage[a4paper]{geometry}
 \usepackage[left=2cm,top=3cm,bottom=3cm,right=2cm]{geometry} 
-\usepackage[pdftex]{color,graphicx,epsfig}
+%\usepackage[pdftex]{color,graphicx,epsfig}
 %\usepackage[applemac]{inputenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 %\usepackage{verbatim}
-\usepackage[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref}
+%\usepackage[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref}
 \usepackage[square, comma, sort&compress, numbers]{natbib}
 
 
-\usepackage{keystroke}  % \Return
 \usepackage{authblk}  % authors and affiliations
  
 %%% Begin captions format:
 %\usepackage[font=sf, labelfont=bf, labelsep=period, position=top]{caption}
-\usepackage[footnotesize, labelfont=bf, labelsep=period, position=top]{caption}
+%\usepackage[footnotesize, labelfont=bf, labelsep=period, position=top]{caption}
 %\usepackage[hang,footnotesize,bf]{caption}
-\setlength{\captionmargin}{70pt}  % margins
+%\setlength{\captionmargin}{70pt}  % margins
 %%% End captions format:
 
 
-\usepackage{wrapfig}
 
 
 \newcommand{\Robject}[1]{\texttt{#1}}
@@ -36,7 +36,7 @@
 \newcommand{\Rclass}[1]{\textit{#1}}
 \newcommand{\R}{\textsf{R}}
 \newcommand{\tlm}{\textsf{tlm}}
-\DeclareGraphicsRule{.pdftex}{pdf}{.pdftex}{}
+%\DeclareGraphicsRule{.pdftex}{pdf}{.pdftex}{}
 
 
 %\title{{\bf tlm} User's Guide: Effects under linear, logistic and Poisson regression models with transformed variables}
@@ -68,11 +68,7 @@
 
 
 
-\usepackage{Sweave2}
 \begin{document}
-<<echo = F, eval = F>>=
-#options(width = 100, continue = "  ")
-@
 \maketitle
 %\begin{center}
 %\noindent
@@ -114,7 +110,7 @@ Start an \R\ session and load the package by typing
 library(tlm)
 @
 <<echo=F>>=
-require(tlm)
+suppressMessages(require(tlm))
 @
 If needed, this user's guide can be recovered by typing
 <<eval=F>>=
@@ -296,7 +292,7 @@ plot(modimt, observed = T, xname = "Age (years)", yname = "IMT (mm)")
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig = TRUE, width = 8, height = 4>>=
+<<echo = F, fig.width=8, fig.height=4>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 <<plotimttrans>>
 <<plotimt>>
@@ -320,7 +316,7 @@ effectInfo(modimt)
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig = TRUE, width = 8, height = 8>>=
+<<echo = F, fig.width=8, fig.height=8>>=
 #par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 par(las = 1, mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 <<plotimtdiag>>
@@ -408,7 +404,7 @@ plot(modcot, xname = "Cotinine (ng/ml)", yname = "weight (kg)")
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig = TRUE, width = 8, height = 4.5>>=
+<<echo = F, fig.width=8, fig.height=4.5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3),  mgp = c(2.8, 0.6, 0))
 <<plotcottrans>>
 <<plotcot>>
@@ -497,7 +493,8 @@ summary(modcat)
 
 We can create Figure \ref{fig:cat} with
 <<eval = F>>=
-plot(modcat, type = "transformed", observed = T, xname = "Mattress levels", yname = "living room levels")
+plot(modcat, type = "transformed", observed = T, xname = "Mattress levels",
+     yname = "living room levels")
 plot(modcat, xname = "Mattress levels", yname = "living room levels")
 @
 <<plotcattrans, echo = F, eval = F>>=
@@ -510,7 +507,7 @@ which provides a graphical representation of the relationship between allergen l
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig = TRUE, width = 8, height = 4.5>>=
+<<echo = F, fig.width=8, fig.height=4.5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(2.8, 0.6, 0))
 <<plotcattrans>>
 <<plotcat>>
@@ -555,7 +552,7 @@ plot(modcat2, yname = "room levels")
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig = TRUE, width = 8, height = 4>>=
+<<echo = F, fig.width=8, fig.height=4>>=
 m <- matrix(0, nrow = 2, ncol = 4)
 m[, 2:3] <- 1
 layout(m)
@@ -598,7 +595,8 @@ MY(modglucose)
 @
 This relationship can also be represented graphically in Figure \ref{fig:gluco}:
 <<eval = F>>=
-plot(modglucose, type = "transformed", observed = T, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
+plot(modglucose, type = "transformed", observed = T, xname = "Triglycerides (mg/dl)",
+     yname = "glucose (mg/dl)")
 plot(modglucose, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
 @
 <<plotglucotrans, echo = F, eval = F>>=
@@ -610,7 +608,7 @@ plot(modglucose, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig = TRUE, width = 8, height = 5>>=
+<<echo = F, fig.width=8, fig.height=5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(3.6, 0.6, 0))
 <<plotglucotrans>>
 <<plotgluco>>
@@ -736,7 +734,8 @@ MY(modcot2)
 
 A graphical representation of the relationship between cotinine level and low birth weight can be obtained by:
 <<eval = F>>=
-plot(modcot2, type = "transformed", xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
+plot(modcot2, type = "transformed", xname = "Cotinine (ng/ml) levels",
+     yname = "low birth weight")
 plot(modcot2, xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
 @
 <<plotcot2trans, echo = F, eval = F>>=
@@ -749,7 +748,7 @@ which provides Figure \ref{fig:cot2}.
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig = TRUE, width = 8, height = 4.5>>=
+<<echo = F, fig.width=8, fig.height=4.5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(2.8, 0.6, 0))
 <<plotcot2trans>>
 <<plotcot2>>
@@ -790,7 +789,8 @@ effect(modcot2, q = 10)
 
 %\bibliography{bayesGen}
 
-\bibitem{Barreratlm2014} Barrera-G\'omez J, Basaga\~na X. Models with transformed variables: interpretation and software. \emph{Epidemiology} (in press).
+\bibitem{Barreratlm2014} Barrera-G\'omez J, Basaga\~na X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17. DOI: 10.1097/EDE.0000000000000247.
+
 
 \bibitem{Rivera2013} Rivera M, Basaga\~na X, Aguilera I, Foraster M, Agis D, de Groot E, Perez L, Mendez MA, Bouso L, Targa J, Ramos R, Sala J, Marrugat J, Elosua R, K\"unzli N. Association between long-term exposure to traffic-related air pollution and subclinical atherosclerosis: The REGICOR study. \emph{Environmental Health Perspectives} 2013;121(2):223-230. DOI:10.1289/ehp.1205146.
 

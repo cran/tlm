@@ -33,10 +33,7 @@ If \code{x} is \code{NULL}, the measure is computed in \code{npoints} values of 
 \item{ypow}{numeric power transformation assumed in the response variable. See \code{\link{tlm}}.}
 \item{xpow}{numeric power transformation assumed in the explanatory variable of interest. See \code{\link{tlm}}.}
 }
-\references{
-Barrera-Gomez J, Basagana X. Models with transformed variables:
-interpretation and software. \emph{Epidemiology} (in press).
-}
+\references{Barrera-Gomez J, Basagana X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17.}
 \author{Barrera-Gomez J and Basagana X.}
 
 \seealso{\code{\link{tlm}}, \code{\link{effectInfo}}, \code{\link{effect}}.}
