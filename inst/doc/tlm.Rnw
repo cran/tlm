@@ -45,18 +45,18 @@
 %
 %\author{
 %Jose Barrera-G\'omez$^{\text{a},\text{b},\text{c}}$\\
-%\texttt{jbarrera@creal.cat}
+%\texttt{jose.barrera@isglobal.org}
 %\and
 %Xavier Basaga\~na$^{\text{a},\text{b},\text{c}}$\\
-%\texttt{xbasagana@creal.cat}
+%\texttt{xavier.basagana@isglobal.org}
 %}
 
 
 
 \title{{\bf tlm} User's Guide: Effects under linear, logistic and Poisson regression models with transformed variables}
-\author[1,2,3]{Jose Barrera-G\'omez\thanks{jbarrera@creal.cat}}
-\author[1,2,3]{Xavier Basaga\~na\thanks{xbasagana@creal.cat}}
-\affil[1]{Centre for Research in Environmental Epidemiology (CREAL)}
+\author[1,2,3]{Jose Barrera-G\'omez\thanks{jose.barrera@isglobal.org}}
+\author[1,2,3]{Xavier Basaga\~na\thanks{xavier.basagana@isglobal.org}}
+\affil[1]{ISGlobal, Centre for Research in Environmental Epidemiology (CREAL)}
 \affil[2]{Universitat Pompeu Fabra (UPF)}
 \affil[3]{CIBER Epidemiolog\'ia y Salud P\'ublica (CIBERESP)}
 

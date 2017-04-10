@@ -6,7 +6,8 @@
 This function computes expected measures of the response variable under a linear, logistic or Poisson regression fitted model with transformed variables. Measures can be calculated in both the original and the transformed space. The function automatically provides the name of the measure depending on the fitted model.
 }
 \usage{
-MY(object, x = NULL, npoints = 10, space = c("original", "transformed"), level = 0.95)
+MY(object, x = NULL, npoints = 10, space = c("original", "transformed"),
+   level = 0.95)
 \method{print}{MY}(x, ...)
 }
 \arguments{
@@ -45,14 +46,14 @@ head(feld1)
 modcat <- tlm(y = logroom, x = logmattress, z = cat, data = feld1, ypow = 0, xpow = 0)
 summary(modcat)
 
-# Geometric mean of the response as a function of the explanatory variable, adjusted for
-# variable 'cat':  
+# Geometric mean of the response as a function of the explanatory variable,
+# adjusted for 'cat':  
 MY(modcat)
 MY(modcat, npoints = 3)
 # computed at 1st and 3rd quartiles of the explanatory variable:
 MY(modcat, x = quantile(feld1$mattress, probs = c(1, 3)/4))
 
-# Mean of the log(response) as a function of the log explanatory variable, adjusted for
-# variable 'cat':  
+# Mean of the log(response) as a function of the log explanatory variable,
+# adjusted for 'cat':  
 MY(modcat, space = "transformed")
 }

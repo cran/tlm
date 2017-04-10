@@ -102,6 +102,10 @@ function(y, x, z = "none", family = gaussian, data, ypow = 1, xpow = 1, ...)
     modtext <- paste("mod <- lm(formula = ", formula, ", data = ", datal, ", ...)", sep = "") else
     modtext <- paste("mod <- glm(formula = ", formula, ", family = ", family$family, ", data = ", datal, ", ...)", sep = "")
   eval(parse(text = modtext))
+  ################ control that 'x' is not involved in 'z':
+  allnam <- all.names(mod$model$call$formula)
+  if (sum(allnam %in% xl0) > 1) # i.e. if xl0 appears more than one time in the formula
+      stop("'x' cannot be involved in 'z'")
   ################ results:
   mf <- model.frame(mod)
   mt <- attr(mf, "terms")

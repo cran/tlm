@@ -6,8 +6,8 @@
 This function estimates the effect of a explanatory variable of interest on a response variable, under a fitted linear, logistic or Poisson regression model with transformed variables. The effect is estimated in the original scale of the variables.
 }
 \usage{
-effect(object, x1 = NULL, x2 = NULL, c = NULL, q = NULL, r = NULL, npoints = NULL,
-       level = 0.95, nboot = 999, seed = 4321, verbose = TRUE)
+effect(object, x1 = NULL, x2 = NULL, c = NULL, q = NULL, r = NULL,
+       npoints = NULL, level = 0.95, nboot = 999, seed = 4321, verbose = TRUE)
 \method{print}{effect}(x, ...)
 }
 %- maybe also 'usage' for other objects documented here.
@@ -52,8 +52,8 @@ modimt
 # information on interpreting the effect:
 effectInfo(modimt)
 
-# the function effect provides as default the expected change in IMT for an additive change in age
-# equal to the interquartile range:
+# the function effect provides as default the expected change in IMT
+# for an additive change in age equal to the interquartile range:
 effect(modimt)
 
 # other effects:

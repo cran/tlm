@@ -1,4 +1,17 @@
 ====================================
+CHANGES IN tlm 0.1.5 (2017-04-10):
+====================================
+
+   DOCUMENTATION:
+
+      * Details on 'z' in 'tlm' have been updated.
+      * Author affiliations have been updated.
+
+   R:
+
+      * Now 'z' in 'tlm' can be any expression allowed as a right-hand-side of a 'formula'. However, expressions involving the variable passed in 'x' are not allowed.
+
+====================================
 CHANGES IN tlm 0.1.4 (2016-05-02):
 ====================================
 

@@ -10,13 +10,14 @@ This function fits a linear, logistic or Poisson regression model with transform
 \usage{
 tlm(y, x, z = "none", family = gaussian, data, ypow = 1, xpow = 1, ...)
 \method{print}{tlm}(x, ...)
-\method{plot}{tlm}(x, type = c("original", "transformed", "diagnosis"), observed = FALSE, xname = "x",
-      yname = "y", level = 0.95, ...)
+\method{plot}{tlm}(x, type = c("original", "transformed", "diagnosis"),
+observed = FALSE,
+                   xname = "x", yname = "y", level = 0.95, ...)
 }
 \arguments{
   \item{y}{name of the response variable (unquoted).}
   \item{x}{name of the explanatory variable of interest (unquoted).}
-  \item{z}{additional explanatory variables in the model. Default is "\code{none}". For a single variable, the name of the variable (unquoted); for more than one variable, the names should be passed unquoted and separated by the plus sign; for all the remaining variables in \code{data}, use just a period (.). No interaction terms are allowed.}
+  \item{z}{additional explanatory variables in the model. Default is "\code{none}". See `Details'.}
   \item{family}{the link function. For linear model, \code{gaussian} (default); for logistic regression, \code{binomial}; for Poisson regression, \code{poisson}. Quoted values are optional. In the case of \code{binomial}, the logit link is assumed.}
   \item{data}{a \code{data.frame} containing the variables in the model.}
   \item{ypow}{numeric power transformation already done in \code{y}. See `Details'.}
@@ -29,7 +30,17 @@ tlm(y, x, z = "none", family = gaussian, data, ypow = 1, xpow = 1, ...)
   \item{\dots}{further additional arguments passed to \code{tlm} or methods \code{print} and \code{plot}.}
 }
 \details{
-The transformations already done in \code{y} and \code{x} are passed by \code{ypow} and \code{xpow}, respectively. They should be a number. Default is 1 (no transformation). The value 0 corresponds to the logarithmic transformation. If \code{family} is not \code{gaussian}, \code{y} is assumed non transformed. If \code{x} is categorical or presents only two different values, the value of \code{xpow} is assumed to be 1.}
+\code{z} can be any expression allowed as a right-hand-side in
+\code{\link{formula}}. However, expressions involving the variable
+passed in \code{x} are not allowed. To include all the remaining
+variables in \code{data}, use just a period (.).
+
+The transformations already done in \code{y} and \code{x} are passed by
+\code{ypow} and \code{xpow}, respectively. They should be a
+number. Default is 1 (no transformation). The value 0 corresponds to the
+logarithmic transformation. If \code{family} is not \code{gaussian},
+\code{y} is assumed non transformed. If \code{x} is categorical or
+presents only two different values, the value of \code{xpow} is assumed to be 1. If \code{x} presents only two different values, it is considered as a binary variable.}
 \value{
 \item{model}{the fitted model in the transformed space.}
 \item{ypow }{the value of \code{ypow}.}
@@ -39,7 +50,7 @@ The transformations already done in \code{y} and \code{x} are passed by \code{yp
 \author{Barrera-Gomez J and Basagana X.}
 
 \seealso{
-\code{\link{MY}}, \code{\link{effect}}. 
+\code{\link{MY}}, \code{\link{effect}}, \code{\link{formula}}. 
 }
 \examples{
 ### Linear model with log-log transformation:
@@ -49,9 +60,9 @@ head(feld1)
 modcat <-  tlm (y = logroom, x = logmattress, z = cat, data = feld1, ypow = 0, xpow = 0)
 modcat
 summary(modcat)
-# plot of the geometric mean of the response (original space), adjusting for variable 'cat':
+# plot of the geometric mean of the response (original space), adjusting for 'cat':
 plot(modcat, xname = "Mattress levels", yname = "room levels") 
-# plot of the mean of the log of response (transformed space), adjusting for variable 'cat' and
+# plot of the mean of the log of response (transformed space), adjusting for 'cat' and
 # adding the observations:
 plot(modcat, type = "transformed", xname = "mattress levels", yname = "room levels",
      observed = TRUE)
@@ -61,8 +72,10 @@ plot(modcat, type = "diagnosis")
 ### The same model but now considering 'cat' as the explanatory variable of interest:
 modcat2 <-  tlm (y = logroom, x = cat, z = logmattress, data = feld1, ypow = 0)
 summary(modcat2)
-# plot of the geometric mean of the response (original space), adjusting for mattress levels:
+# plot of the geometric mean of the response (original space), adjusting
+# for mattress levels:
 plot(modcat2, xname = "Cat", yname = "room levels") 
-# plot of the mean of the log of response (transformed space), adjusting for mattress levels:
+# plot of the mean of the log of response (transformed space), adjusting
+# for mattress levels:
 plot(modcat2, type = "transformed", xname = "Cat", yname = "room levels")
 }
