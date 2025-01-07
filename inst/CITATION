@@ -1,0 +1,18 @@
+bibentry(bibtype     = "Article",
+         textVersion = paste("Barrera-Gomez J, Basagana X.",
+                             "Models with transformed variables: Interpretation and software.",
+                             "Epidemiology",
+                             "2015;26(2):e16-17.",
+                             "DOI: 10.1097/EDE.0000000000000247."),
+         title       = "Models with transformed variables: Interpretation and software",
+         author      = c(person(given = "Jose", family = "Barrera-G\\'omez"),
+                         person(given = "Xavier", family = "Basaga\\~na")),
+         journal     = "Epidemiology",
+         year        = "2015",
+         volume      = "26",
+         number      = "2",
+         pages       = "e16--17",
+         doi         = "10.1097/EDE.0000000000000247",
+         url         = "https://doi.org/10.1097/EDE.0000000000000247",
+         header      = "If you use tlm, please cite:"
+)

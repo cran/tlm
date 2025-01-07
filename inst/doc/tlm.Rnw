@@ -1,33 +1,49 @@
-
 %\VignetteEngine{knitr::knitr}
-% \VignetteIndexEntry{User's manual for the tlm package}
+%\VignetteEncoding{UTF-8}
+%\VignetteIndexEntry{Using tlm to fit, visualize and interpret regression models with transformed variables}
+%\VignetteKeywords{regression models, transformations, logarithm}
+%\VignettePackage{collin}
 \documentclass[11pt]{article}
-\usepackage{url}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amsthm}
 %\usepackage[a4paper]{geometry}
-\usepackage[left=2cm,top=3cm,bottom=3cm,right=2cm]{geometry} 
+\usepackage[left=2.5cm,top=3cm,bottom=3cm,right=2.5cm]{geometry}
 %\usepackage[pdftex]{color,graphicx,epsfig}
 %\usepackage[applemac]{inputenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{url}
+
+\usepackage{xcolor}
+\usepackage[colorlinks=true,linkcolor=black!20!blue,citecolor=black!25!green,urlcolor=black!15!blue]{hyperref}
+\usepackage{url}
+
 %\usepackage{verbatim}
 %\usepackage[colorlinks=true,linkcolor=black,citecolor=blue,urlcolor=black]{hyperref}
-\usepackage[square, comma, sort&compress, numbers]{natbib}
+%\usepackage[square, comma, sort&compress, numbers]{natbib}
+\usepackage[super,square,comma,sort&compress,numbers]{natbib}
+
+
+
+%\usepackage{natbib}
+\bibliographystyle{unsrtnat}
+%\setcitestyle{authoryear,open={(},close={)}}
+
+%\usepackage[nottoc,numbib]{tocbibind} % For bibliography in the table of contents
+\usepackage[nottoc]{tocbibind} % For bibliography in the table of contents but no "Chapter" label inside
 
 
 \usepackage{authblk}  % authors and affiliations
- 
+
+
 %%% Begin captions format:
 %\usepackage[font=sf, labelfont=bf, labelsep=period, position=top]{caption}
 %\usepackage[footnotesize, labelfont=bf, labelsep=period, position=top]{caption}
-%\usepackage[hang,footnotesize,bf]{caption}
-%\setlength{\captionmargin}{70pt}  % margins
+\usepackage[hang,footnotesize,bf]{caption}
+\setlength{\captionmargin}{70pt}  % margins
 %%% End captions format:
-
-
 
 
 \newcommand{\Robject}[1]{\texttt{#1}}
@@ -39,24 +55,12 @@
 %\DeclareGraphicsRule{.pdftex}{pdf}{.pdftex}{}
 
 
-%\title{{\bf tlm} User's Guide: Effects under linear, logistic and Poisson regression models with transformed variables}
-
-%\vspace{1cm}
-%
-%\author{
-%Jose Barrera-G\'omez$^{\text{a},\text{b},\text{c}}$\\
-%\texttt{jose.barrera@isglobal.org}
-%\and
-%Xavier Basaga\~na$^{\text{a},\text{b},\text{c}}$\\
-%\texttt{xavier.basagana@isglobal.org}
-%}
-
-
-
-\title{{\bf tlm} User's Guide: Effects under linear, logistic and Poisson regression models with transformed variables}
+\title{Using the \R\ package \tlm\ to fit, visualize and interpret linear, logistic and Poisson regression models with transformed variables\\
+\vspace{4mm}
+\small{(\tlm\ version \Sexpr{utils::packageDescription("tlm")$Version})}}
 \author[1,2,3]{Jose Barrera-G\'omez\thanks{jose.barrera@isglobal.org}}
 \author[1,2,3]{Xavier Basaga\~na\thanks{xavier.basagana@isglobal.org}}
-\affil[1]{ISGlobal, Centre for Research in Environmental Epidemiology (CREAL)}
+\affil[1]{ISGlobal}
 \affil[2]{Universitat Pompeu Fabra (UPF)}
 \affil[3]{CIBER Epidemiolog\'ia y Salud P\'ublica (CIBERESP)}
 
@@ -65,24 +69,19 @@
 
 
 
-
-
-
 \begin{document}
+
+
+<<options, include=FALSE>>=
+library(knitr)
+library(xtable)
+#options(scipen = 999) # to avoid scientic notation in knitr outputs
+opts_chunk$set(size = 'small',
+               fig.align = 'center')
+@
+
+
 \maketitle
-%\begin{center}
-%\noindent
-%{\scriptsize
-%$^\text{a}$Centre for Research in Environmental Epidemiology (CREAL)\\
-%
-%$^\text{b}$Universitat Pompeu Fabra (UPF)\\
-%
-%$^\text{c}$CIBER Epidemiolog\'ia y Salud P\'ublica (CIBERESP)
-%}
-%\end{center}
-
-
-
 
 \tableofcontents
 
@@ -96,7 +95,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-This document is a user's guide for the \R\footnote{\R\ is a free and open source software and it is available at \url{http://cran.r-project.org/}.} package \tlm, which provides the effect of an explanatory variable of interest, $X$, on a response variable, $Y$, under a linear, logistic or Poisson regression model with transformations in $X$ and/or $Y$. In the case of the linear regression model, log and power transformations in any of $X$ and $Y$ are allowed. In the case of logistic and Poisson regression models, log or power transformation in $X$ are allowed. Other explanatory variables can be in the model, in which case adjusted measures for $Y$ and adjusted effects of $X$ on $Y$ are automatically computed. The package also works if there is no transformation. The package provides both numerical and graphical outputs as well as information on interpreting results. The methodology is described in the manuscript \cite{Barreratlm2014}, whose illustrative examples, among others, are reproduced here.
+This document is a user's guide for the \R\footnote{\R\ is a free and open source software and it is available at \url{http://cran.r-project.org/}.} package \tlm, which provides the effect of an explanatory variable of interest, $X$, on a response variable, $Y$, under a linear, logistic or Poisson regression model with transformations in $X$ and/or $Y$. In the case of the linear regression model, log and power transformations in any of $X$ and $Y$ are allowed. In the case of logistic and Poisson regression models, log or power transformation in $X$ are allowed. Other explanatory variables can be in the model, in which case adjusted measures for $Y$ and adjusted effects of $X$ on $Y$ are automatically computed. The package also works if there are no transformations. The package provides both numerical and graphical outputs as well as information on interpreting results. The methodology is described in the original work by \citet{Barrera2015}, whose illustrative examples, among others, are reproduced here.
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%                                                         %%%
@@ -106,61 +105,113 @@ This document is a user's guide for the \R\footnote{\R\ is a free and open sourc
 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Getting started}
 Start an \R\ session and load the package by typing
-<<echo=T, eval=F>>=
+<<echo=TRUE, eval=TRUE>>=
 library(tlm)
 @
-<<echo=F>>=
-suppressMessages(require(tlm))
-@
-If needed, this user's guide can be recovered by typing
-<<eval=F>>=
-vignette("tlm")
-@
+
 You can get a brief overview of the package by typing
-<<eval=F>>=
+<<eval=FALSE>>=
 help(package = "tlm")
 @
 
+This user's guide can be recovered by typing
+<<eval=FALSE>>=
+browseVignettes("tlm")
+@
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
-%%%                                                         %%%
-%%%   2.1.  Fitting the model                   %%%
-%%%                                                         %%%
+%%%
+%%%   2.1.  Fitting the model
+%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Fitting the model}
 \label{sec:tlm}
-The first step is to fit the model in the transformed space (i.e., considering that $Y$ and $X$ are already transformed, if any transformation is assumed). This is performed by the function \Robject{tlm}. We can get information on this function using the help:
-<<echo=T, eval=FALSE>>=
+The first step is to fit the model in the transformed space (i.e., considering that $Y$ and $X$ are already transformed, if any transformation is assumed), which is performed by the function \Robject{tlm}. We can get information on this function using the help:
+<<echo=TRUE, eval=FALSE>>=
 ?tlm
 @
-
 \noindent The main arguments of the function \Robject{tlm} are:
 \begin{itemize}
-\item \Robject{y}: the response variable.
-\item \Robject{x}: the explanatory variable of interest.
-\item \Robject{z}: additional explanatory variables in the model. The default value is \Robject{"none"}. For a single variable, we need to write just the name of the variable (unquoted); for more than one variable, the names should be passed unquoted and separated by the plus sign (e.g., \Robject{z = x2 + x3 + x4}); in the case of including the remaining variables in \Robject{data}, use just a period (\Robject{.}). No interaction terms are allowed.
+\item \Robject{formula}: the model formula with the usual syntax as in \Robject{lm} and \Robject{glm}. Left-hand-side indicates the response variable (whose values are assumed to be already transformed). First term in right-hand-side indicates the explanatory variable of interest (whose values are assumed to be already transformed). Right-hand-side can include additional terms (e.g. adjusting variables) but the explanatory variable of interest cannot be involved in any of them. 
 \item \Robject{family}: the model family. It can be \Robject{gaussian}, for linear regression (default); \Robject{binomial}, for logistic regression with logit link, o \Robject{poisson}, for Poisson regression.
-\item \Robject{data}: a \Robject{data.frame} containing the variables \Robject{y}, \Robject{x} and those in \Robject{z}, if any.
-\item \Robject{ypow} and \Robject {xpow}: the power transformations assumed in \Robject{y} and \Robject{x}, respectively. The value 1 (default) means no transformation; the value 0 means log transformation.
+\item \Robject{data}: a \Robject{data.frame} containing the variables in the model.
+\item \Robject{ypow} and \Robject {xpow}: the power transformations already done in the response and in the explanatory variable of interest, respectively. The value 1 (default) means no transformation; the value 0 means log transformation.
+
+\item \Robject{\dots}: additional arguments for the underlying \Robject{lm} or \Robject{glm} fitting.
+
 \end{itemize}
 
-We can use the method \Robject{summary} to obtain information on the fitted model. As a result of a call to the function \Robject{tlm}, we obtain an object of class \Robject{"tlm"} which can be passed to the functions \Robject{MY} and \Robject{effect} in order to obtain adjusted measures and effects, respectively, as we will see in next sections.
+As a result of a call to the function \Robject{tlm}, we obtain an object of class \Robject{"tlm"} which can be passed to the following functions or methods:
+
+\begin{itemize}
+\item \Robject{summary} to summarize the fitted model (section \ref{sec:summary})
+\item \Robject{plot} to visualize the fitted model (section \ref{sec:plot})
+\item \Robject{MY} to obtain adjusted measures (section \ref{sec:MY})
+\item \Robject{effect} to obtain adjusted effects (section \ref{sec:effects})
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
-%%%                                                         %%%
-%%%   2.2.  Adjusted measures                %%%
-%%%                                                         %%%
+%%%
+%%%   2.2.  Summary of the fitted model
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Summary of the fitted model}
+\label{sec:summary}
+The method \Robject{summary} provides information on the fitted model. It essentially provides the summary of the underlying \Robject{lm} or \Robject{glm} fitted in the transformed space.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%   2.3.  Visualization of the fitted model
+%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Visualization of the fitted model}
+\label{sec:plot}
+The specific method \Robject{plot} provides, for an object of class \Robject{"tlm"} (output of the \Robject{tlm} function), a graphical representation of the fitted model. There are three types of visualization, depending on the value of the argument \Robject{type} passed to \Robject{plot}:
+
+\begin{itemize}
+\item \Robject{type = "original"} (default): the fitted model is plotted in the original space of the variables. If a visualization of the fitted model is reported, this is the proper option.  
+\item \Robject{type = "transformed"}: the fitted model is plotted in the transformed space of the variables (where the model has been fitted). Plots obtained for this option are intended to visually explore the model goodness of fit and should not be reported because values of the transformed variables are meaningless (e.g. the logarithm of cotinine levels (ng/ml) has no sense).
+
+\item \Robject{type = "diagnosis"}: a fitted model diagnostics plot is shown as with \Robject{plot.lm} or \Robject{plot.glm}. 
+
+\end{itemize}
+
+Other arguments of the specific method \Robject{plot} are:
+
+\begin{itemize}
+\item \Robject{observed}: logical indicating whether the observations are shown in the plot. Default is \Robject{FALSE}.
+
+\item \Robject{xname}, \Robject{yname}: character indicating the name of the explanatory and the response variable of interest for labeling the plot axes. Default are \Robject{"x"} and \Robject{"y"}, respectively.
+
+\item \Robject{level}: numeric indicating the confidence level for the confidence of the expectation of the response variable according to the fitted model. Default is
+0.95.
+
+\end{itemize}
+
+
+
+The specific method \Robject{plot} automatically labels the $Y$ axis with the appropriate name of the measure (i.e. mean, geometric mean, etc).
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%
+%%%   2.4.  Adjusted measures
+%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Adjusted measures}
 \label{sec:MY}
 Once the model has been fitted with the function \Robject{tlm}, the resulting object can be passed to the function \Robject{MY}, which provides measures of the response variable for given values of the explanatory variable. If the model contains other explanatory variables, then adjusted measures are automatically computed. These adjusted measures are obtained by setting the remaining explanatory variables in the model at their means. We can get information on this function using the help:
-<<echo=T, eval=FALSE>>=
+<<echo=TRUE, eval=FALSE>>=
 ?MY
 @
-
 \noindent The main arguments of the function \Robject{MY} are:
 \begin{itemize}
 \item \Robject{object}: an object of class \Robject{"tlm"}, the result of a call to the function \Robject{tlm}.
@@ -172,23 +223,20 @@ Once the model has been fitted with the function \Robject{tlm}, the resulting ob
 
 The function \Robject{MY} automatically provides the unit of the measure (mean, geometric mean, median, probability or logodds, depending on the case).
 
-In addition, the method \Robject{plot} provides, for an object of class \Robject{"tlm"}, a graphical representation of adjusted measures. The argument \Robject{type} of the method \Robject{plot} controls whether the plot should be shown in the original space (\Robject{"original"}, default) or in the transformed space (\Robject{"transformed"}). The method \Robject{plot} automatically labels the $Y$ axis with the appropriate names of the measure. Using the value \Robject{"space = diagnosis"} provides a diagnostics plot.
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
-%%%                                                         %%%
-%%%   2.3.  Adjusted effects                     %%%
-%%%                                                         %%%
+%%%
+%%%   2.5.  Adjusted effects
+%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Adjusted effects}
 \label{sec:effects}
-The fitted model can be passed to the function \Robject{effect} in order to obtain the effect of $X$ on $Y$ in the original space of the variables, adjusted for those variables in \Robject{z}, if any. We can get information on this function using the help:
-<<echo=T, eval=FALSE>>=
+The fitted model can be passed to the function \Robject{effect} in order to obtain the effect of $X$ on $Y$ in the original space of the variables, adjusted for other potential adjusting variables passed in \Robject{formula} to the \Robject{tlm} function. We can get information on this function using the help:
+<<echo=TRUE, eval=FALSE>>=
 ?effect
 @
-
 \noindent The main arguments of the function \Robject{effect} are:
 \begin{itemize}
 \item \Robject{object}: an object of class \Robject{"tlm"}, the result of a call to the function \Robject{tlm}.
@@ -201,11 +249,9 @@ The fitted model can be passed to the function \Robject{effect} in order to obta
 \item \Robject{level}: the confidence level for the effect.
 \end{itemize}
 
-In order to compute effects, the change in the explanatory variable should be characterized. It can be done in several ways. For instance, providing: (1) \Robject{x1} and \Robject{x2}; (2) \Robject{x1} and one of \Robject{c}, \Robject{q} or \Robject{r}; (3) \Robject{x1}, \Robject{npoints} and one of \Robject{c}, \Robject{q} or \Robject{r}. Only one of the arguments \Robject{c}, \Robject{q} or \Robject{r} is used, prevailing \Robject{c} and then \Robject{q}. If no enough arguments are passed, the interquartile range will be considered and a summary effect should be computed, if it exists. If the explanatory variable is categorical, then the effect is computing for a change between the reference level and each of the remaining levels of the explanatory variable. Confidence intervals are computed by transforming the endpoints of the intervals in the transformed scale when it is possible, while non-parametric bootstrap is used otherwise. The function \Robject{effect} automatically provides the unit of the effect measure (mean, geometric mean, median or odds ratio, depending on the case).
+In order to compute effects, the change in the explanatory variable should be characterized. It can be done in several ways. For instance, providing: (1) \Robject{x1} and \Robject{x2}; (2) \Robject{x1} and one of \Robject{c}, \Robject{q} or \Robject{r}; (3) \Robject{x1}, \Robject{npoints} and one of \Robject{c}, \Robject{q} or \Robject{r}. Only one of the arguments \Robject{c}, \Robject{q} or \Robject{r} is used, prevailing \Robject{c} and then \Robject{q}. If no enough arguments are passed, the interquartile range will be considered and a summary effect should be computed, if it exists. If the explanatory variable is categorical, then the effect is computing for a change between the reference level and each of the remaining levels of the explanatory variable. Confidence intervals are computed by transforming the endpoints of the intervals in the transformed scale when it is possible, while non-parametric bootstrap is used otherwise. The function \Robject{effect} automatically provides the unit of the effect measure (mean, geometric mean, median or odds ratio, depending on the case).\\
 
-In addition, the function \Robject{effectInfo} provides information on interpreting the effect (use \Robject{?effectInfo} for further details).
-
-
+In addition, the function \Robject{effectInfo} provides further information on how to interpret the effect (use \Robject{?effectInfo} for further details).
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%                                                         %%%
@@ -214,7 +260,6 @@ In addition, the function \Robject{effectInfo} provides information on interpret
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 \section{Illustrative examples}
-
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%                                                         %%%
@@ -232,22 +277,20 @@ In addition, the function \Robject{effectInfo} provides information on interpret
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Log transformation in the response}
 \label{sec:imt}
-Consider the evaluation of the association between the intima media thickness of the carotid artery (IMT), measured in mm, $Y$, and age, in years, $X$. Variable $Y$ was log transformed to achieve normality. The \Robject{imt} data were simulated to emulate true data pattern observed in a real study \cite{Rivera2013}.
+Consider the evaluation of the association between the intima media thickness of the carotid artery (IMT), measured in mm, $Y$, and age, in years, $X$. Variable $Y$ was log transformed to achieve normality. The \Robject{imt} data were simulated to emulate true data pattern observed in a real study \cite{Rivera2013}.\\
 
-First, we can load data and see its first rows and a summary:
+First, we can load data (further information about data is available with the help function, \Robject{?imt}) and see its first rows and a summary:
 <<>>=
 data(imt)
 dim(imt)
 head(imt)
 summary(imt)
 @
-Further information about data is available with the help function, \Robject{?imt}.
-
 Suppose that we are interested in the effect of age on IMT, under a linear regression model with log transformation in the response variable, IMT. The model can be fitted as follows:
 <<>>=
-modimt <- tlm(y = logimt, x = age, data = imt, ypow = 0)
+modimt <- tlm(logimt ~ age, data = imt, ypow = 0)
 @
-where \Robject{ypow = 0} indicates that the response variable is already log transformed. Note that we have not set the family since default family is Gaussian. The fitted model results in:
+\noindent where \Robject{ypow = 0} indicates that the response variable is already log transformed. Note that we have not set the family since default family is Gaussian. The fitted model results in:
 <<>>=
 modimt
 @
@@ -279,33 +322,26 @@ MY(modimt, x = q13, space = "transformed")
 @
 
 A graphical representation of the relationship between age and IMT is available using the method \Robject{plot}. For instance, the two following instructions provide left and right plots in Figure \ref{fig:imt}, respectively:
-<<eval = F>>=
-plot(modimt, type = "transformed", observed = T, xname = "Age (years)", yname = "IMT")
-plot(modimt, observed = T, xname = "Age (years)", yname = "IMT (mm)")
-@
-<<plotimttrans, echo = F, eval = F>>=
-plot(modimt, type = "transformed", observed = T, xname = "Age (years)", yname = "IMT")
-@
-<<plotimt, echo = F, eval = F>>=
-plot(modimt, observed = T, xname = "Age (years)", yname = "IMT (mm)")
+<<plotimt, eval=FALSE>>=
+plot(modimt, type = "transformed", observed = TRUE, xname = "Age (years)", yname = "IMT")
+plot(modimt, observed = TRUE, xname = "Age (years)", yname = "IMT (mm)")
 @
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig.width=8, fig.height=4>>=
+<<echo=FALSE, fig.width=8, fig.height=4>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
-<<plotimttrans>>
 <<plotimt>>
 @
-\caption{Mean of log of IMT (left) and geometric mean (or median) of IMT (right) as a function of the age. Dashed lines represent 95\% confidence intervals for the measure.}
+\caption{Visualization of the fitted model \Robject{modimt}. Left: In the transformed space, the mean of the logarithm of IMT values as a function of age is shown. Note that this plot should not be reported since the logarithm of IMT values are meaningless. This type of plot is intended just to visually explore the model goodness of fit. Right: In the original space, the geometric mean (or equivalently the median) of IMT values as a function of age is shown. This type of plot is appropriate for reporting. Dashed lines represent 95\% confidence intervals for the measure.}
 \label{fig:imt}
 \end{center}
 \end{figure}
 
-The argument \Robject{observed} controls whether observations are shown in the plot (default is \Robject{FALSE}). Further information on the usage of the method \Robject{plot} is available using \Robject{?tlm}.
+The argument \Robject{observed} controls whether observations are shown in the plot (default is \Robject{FALSE}). Further information on the usage of the method \Robject{plot} is available using \Robject{?tlm}.\\
 
 Diagnostics plot as in Figure \ref{fig:imtdiag} can be obtained with the following instruction:
-<<plotimtdiag, eval = F>>=
+<<plotimtdiag, eval=FALSE>>=
 plot(modimt, type = "diagnosis") 
 @
 
@@ -316,7 +352,7 @@ effectInfo(modimt)
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig.width=8, fig.height=8>>=
+<<echo=FALSE, fig.width=8, fig.height=8>>=
 #par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 par(las = 1, mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 <<plotimtdiag>>
@@ -326,7 +362,7 @@ par(las = 1, mar = c(5, 5, 3, 3),  mgp = c(2.8, 0.6, 0))
 \end{center}
 \end{figure}
 
-Thus, we can see that, in this case, if we use additive changes in $X$ and percent (or multiplicative) changes in the geometric mean of $Y$, a summary effect can be obtained, which is independent of the value of $X$ for which the effect is computed.
+\noindent Thus, we can see that, in this case, if we use additive changes in $X$ and percent (or multiplicative) changes in the geometric mean of $Y$, a summary effect can be obtained, which is independent of the value of $X$ for which the effect is computed.
 
 The function \Robject{effect} provides as default the expected change in IMT for an additive change in age equal to the interquartile range:
 <<>>=
@@ -359,7 +395,7 @@ effect(modimt, x1 = q123)
 %\end{Soutput}
 %\end{Schunk}
 
-As in this example, when a summary effect is not computed, then both difference and percent changes in the response are computed. The number of bootstrap samples is controlled by the argument \Robject{nboot} whoose default value is 999 \cite{Davison1997}.
+As in this example, when a summary effect is not computed, then both difference and percent changes in the response are computed. The number of bootstrap samples is controlled by the argument \Robject{nboot} whose default value is 999\cite{Davison1997}.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -371,7 +407,7 @@ As in this example, when a summary effect is not computed, then both difference 
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Log transformation in the explanatory variable}
 \label{sec:cot}
-Consider now the evaluation of the association between the birth weight, in grams, $Y$, and the cord serum cotinine level in the mother, in ng/ml, $X$. Variable $X$ was log transformed to achieve a more homogeneous distribution. The \Robject{cotinine} data were simulated to emulate true data patterns observed in a real study \cite{Pichini2000}. Data also contains a binary variable indicating whether the birth weight was low (defined as lower than 2500 g).
+Consider now the evaluation of the association between the birth weight, in grams, $Y$, and the cord serum cotinine level in the mother, in ng/ml, $X$. Variable $X$ was log transformed to achieve a more homogeneous distribution. The \Robject{cotinine} data were simulated to emulate true data patterns observed in a real study\cite{Pichini2000}. Data also contains a binary variable indicating whether the birth weight was low (defined as lower than 2500 g).\\
 
 We can load and explore data (further information about data is available with the help function, \Robject{?cotinine}):
 <<>>=
@@ -383,33 +419,26 @@ summary(cotinine)
 
 Suppose that we are interested in the effect of cotinine level on birth weight, under a linear regression model with log transformation in the explanatory variable, cotinine. The model can be fitted as follows:
 <<>>=
-modcot <- tlm(y = weight, x = logcotinine, data = cotinine, xpow = 0)
+modcot <- tlm(weight ~ logcotinine, data = cotinine, xpow = 0)
 @
-where \Robject{xpow = 0} indicates that the explanatory variable is already log transformed. The fitted model provides the following results:
+\noindent where \Robject{xpow = 0} indicates that the explanatory variable is already log transformed. The fitted model provides the following results:
 <<>>=
 summary(modcot)
 @
 
 In Figure \ref{fig:cot} (obtained with the following instructions) we can see the fitted model (left) and the relationship between cotinine level and birth weight, under the model, in the original space of the variables (right).
-<<eval = F>>=
-plot(modcot, type = "transformed", observed = T, xname = "Cotinine", yname = "weight (kg)")
-plot(modcot, xname = "Cotinine (ng/ml)", yname = "weight (kg)")
-@
-<<plotcottrans, echo = F, eval = F>>=
-plot(modcot, type = "transformed", observed = T, xname = "Cotinine", yname = "weight (kg)")
-@
-<<plotcot, echo = F, eval = F>>=
+<<plotcot, eval=FALSE>>=
+plot(modcot, type = "transformed", observed = TRUE, xname = "Cotinine", yname = "weight (kg)")
 plot(modcot, xname = "Cotinine (ng/ml)", yname = "weight (kg)")
 @
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig.width=8, fig.height=4.5>>=
+<<echo=FALSE, fig.width=8, fig.height=4.5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3),  mgp = c(2.8, 0.6, 0))
-<<plotcottrans>>
 <<plotcot>>
 @
-\caption{Mean of birth weight as a function of cotinine in log scale (left) and in the natural scale (right). Dashed lines represent 95\% confidence intervals for the measure.}
+\caption{Visualization of the fitted model \Robject{modcot}. Left: In the transformed space, mean weight (kg) as a function of the logarithm of cotinine levels is shown. Note that this plot should not be reported since the logarithm of cotinine levels are meaningless. This type of plot is intended just to visually explore the model goodness of fit. Right: In the original space, the mean weight (kg) as a function of cotinine levels is shown. This type of plot is appropriate for reporting. Dashed lines represent 95\% confidence intervals for the measure.}
 \label{fig:cot}
 \end{center}
 \end{figure}
@@ -472,7 +501,7 @@ effect(modcot, x1 = 100, c = 200, npoints = 4)
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Log transformation in both the response and the explanatory variable}
 \label{sec:cat}
-Consider an epidemiological study to assess the association between cat allergen levels ({\it Fel d 1}) in the bed mattress, $X$, and in the living room, $Y$, in homes of study participants, taking into account cat ownership, $C$. Both variables $X$ and $Y$ were log transformed to achieve linearity in their relationship. The \Robject{feld1} data were simulated to emulate true data patterns observed in a real study \cite{Basagana2002}.
+Consider an epidemiological study to assess the association between cat allergen levels ({\it Fel d 1}) in the bed mattress, $X$, and in the living room, $Y$, in homes of study participants, taking into account cat ownership, $C$. Both variables $X$ and $Y$ were log transformed to achieve linearity in their relationship. The \Robject{feld1} data were simulated to emulate true data patterns observed in a real study\cite{Basagana2002}.\\
 
 We can load and explore data (further information about data is available with the help function, \Robject{?feld1}):
 <<>>=
@@ -484,35 +513,28 @@ summary(feld1)
 
 Suppose that we are interested in the association between allergen levels in the mattress and in the living room, under a linear regression model with log transformation in both variables, adjusting for cat ownership. The model can be fitted as follows:
 <<>>=
-modcat <-  tlm (y = logroom, x = logmattress, z = cat, data = feld1, ypow = 0, xpow = 0)
+modcat <- tlm(logroom ~ logmattress + cat, data = feld1, ypow = 0, xpow = 0)
 @
-where \Robject{ypow = 0} and  \Robject{xpow = 0} indicate that both the explanatory and the response variables are already log transformed. The fitted model provides the following results:
+\noindent where \Robject{ypow = 0} and  \Robject{xpow = 0} indicate that both the explanatory and the response variables are already log transformed. The fitted model provides the following results:
 <<>>=
 summary(modcat)
 @
 
 We can create Figure \ref{fig:cat} with
-<<eval = F>>=
-plot(modcat, type = "transformed", observed = T, xname = "Mattress levels",
+<<plotcat, eval=FALSE>>=
+plot(modcat, type = "transformed", observed = TRUE, xname = "Mattress levels",
      yname = "living room levels")
 plot(modcat, xname = "Mattress levels", yname = "living room levels")
 @
-<<plotcattrans, echo = F, eval = F>>=
-plot(modcat, type = "transformed", observed = T, xname = "Mattress levels", yname = "living room levels")
-@
-<<plotcat, echo = F, eval = F>>=
-plot(modcat, xname = "Mattress levels", yname = "living room levels")
-@
-which provides a graphical representation of the relationship between allergen levels in the mattress and in the living room. Measures in Figure \ref{fig:cat} have been obtained after averaging the expected measure of $Y$ over all subjects in the dataset. This is equivalent to saying that measures and effects are calculated for an average individual in the population and they can be interpreted as adjusted measures and adjusted effects \cite{Searle1980} .
+\noindent which provides a graphical representation of the relationship between allergen levels in the mattress and in the living room. Measures in Figure \ref{fig:cat} have been obtained after averaging the expected measure of $Y$ over all subjects in the data set. This is equivalent to saying that measures and effects are calculated for an average individual in the population and they can be interpreted as adjusted measures and adjusted effects\cite{Searle1980} .
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig.width=8, fig.height=4.5>>=
+<<echo=FALSE, fig.width=8, fig.height=4.5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(2.8, 0.6, 0))
-<<plotcattrans>>
 <<plotcat>>
 @
-\caption{Mean of birth weight as a function of cotinine in log scale (left) and in the natural scale (right). Dashed lines represent 95\% confidence intervals for the measure.}
+\caption{Visualization of the fitted model \Robject{modcat}. Left: In the transformed space, the logarithm of mean {\it Fel d 1} levels in room as a function of the logarithm of {\it Fel d 1} levels in mattress is shown. Note that this plot should not be reported since the logarithm of {\it Fel d 1} levels are meaningless. This type of plot is intended just to visually explore the model goodness of fit. Right: In the original space, the geometric mean (or equivalently median) of {\it Fel d 1} levels in room as a function of {\it Fel d 1} levels in mattress is shown. This type of plot is appropriate for reporting. Dashed lines represent 95\% confidence intervals for the measure.}
 \label{fig:cat}
 \end{center}
 \end{figure}
@@ -522,7 +544,7 @@ The function \Robject{effectInfo} provides information on interpreting the relat
 effectInfo(modcat)
 @
 
-In this case, if we use multiplicative (or percent) changes in both variables, a summary effect can be obtained, which is independent of the value of the explanatory variable for which the effect is computed.
+In this case, if we use multiplicative (or percent) changes in both variables, a summary effect can be obtained, which is independent of the value of the explanatory variable for which the effect is computed.\\
 
 The function \Robject{effect} provides as default the expected change in allergen levels in the living room for a percent change in allergen levels in mattress equal to the interquartile ratio:
 <<>>=
@@ -531,7 +553,7 @@ effect(modcat)
 
 If we are interested in the effect of cat ownership on allergen levels in the living room, with log transformation in this, we should run a new model with cat ownership as the explanatory variable:
 <<>>=
-modcat2 <-  tlm (y = logroom, x = cat, data = feld1, ypow = 0)
+modcat2 <- tlm(logroom ~ cat, data = feld1, ypow = 0)
 modcat2
 @
 
@@ -546,13 +568,13 @@ effect(modcat2)
 @
 
 A graphical representation of the relationship can be obtained (see Figure \ref{fig:cat2}):
-<<plotcat2, eval = F>>=
+<<plotcat2, eval=FALSE>>=
 plot(modcat2, yname = "room levels")
 @
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig.width=8, fig.height=4>>=
+<<echo=FALSE, fig.width=8, fig.height=4>>=
 m <- matrix(0, nrow = 2, ncol = 4)
 m[, 2:3] <- 1
 layout(m)
@@ -573,7 +595,7 @@ par(las = 1)
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Power transformations}
 \label{sec:glucose}
-Consider now the modeling of the association between triglycerides, $X$, and glucose, $Y$, levels in blood, both measured in mg/dl. Variables $X$ and $Y$ were transformed under power functions $g(X) = 1 / \sqrt{X} = X^{-1/2}$ and $f(Y) = 1/Y^2 = Y^{-2}$, respectively, to achieve linearity. The \Robject{glucose} data were simulated to emulate true data pattern observed in a real study \cite{Rivera2013}.
+Consider now the modeling of the association between triglycerides, $X$, and glucose, $Y$, levels in blood, both measured in mg/dl. Variables $X$ and $Y$ were transformed under power functions $g(X) = 1 / \sqrt{X} = X^{-1/2}$ and $f(Y) = 1/Y^2 = Y^{-2}$, respectively, to achieve linearity. The \Robject{glucose} data were simulated to emulate true data pattern observed in a real study\cite{Rivera2013}.\\
                            
 First, we can load and explore data (further information about data is available with the help function, \Robject{?glucose}):
 <<>>=
@@ -585,7 +607,7 @@ summary(glucose)
 
 Then, we can fit and explore the model of interest:
 <<>>=
-modglucose <- tlm(y = inv2glu, x = inv12tri, data = glucose, ypow = -2, xpow = -1/2)
+modglucose <- tlm(inv2glu ~ inv12tri, data = glucose, ypow = -2, xpow = -1/2)
 summary(modglucose)
 @
 
@@ -594,26 +616,19 @@ The function \Robject{MY} provides a numerical representation of the relationshi
 MY(modglucose)
 @
 This relationship can also be represented graphically in Figure \ref{fig:gluco}:
-<<eval = F>>=
-plot(modglucose, type = "transformed", observed = T, xname = "Triglycerides (mg/dl)",
+<<plotgluco, eval=FALSE>>=
+plot(modglucose, type = "transformed", observed = TRUE, xname = "Triglycerides (mg/dl)",
      yname = "glucose (mg/dl)")
-plot(modglucose, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
-@
-<<plotglucotrans, echo = F, eval = F>>=
-plot(modglucose, type = "transformed", observed = T, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
-@
-<<plotgluco, echo = F, eval = F>>=
 plot(modglucose, xname = "Triglycerides (mg/dl)", yname = "glucose (mg/dl)")
 @
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig.width=8, fig.height=5>>=
+<<echo=FALSE, fig.width=8, fig.height=5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(3.6, 0.6, 0))
-<<plotglucotrans>>
 <<plotgluco>>
 @
-\caption{Relationship between glucose triglycerides levels in the transformed space (left) and in the natural scale of the variables (right). Dashed lines represent 95\% confidence intervals for the measure.}
+\caption{Visualization of the fitted model \Robject{modglucose}. Left: In the transformed space, the reciprocal of the squared mean of glucose levels as a function of the reciprocal of the square root of triglycerides levels is shown. Note that this plot should not be reported since the reciprocal of the squared mean of glucose levels and the square root of triglycerides levels are meaningless. This type of plot is intended just to visually explore the model goodness of fit. Right: In the original space, the geometric mean (or equivalently median) of glucose levels as a function of triglycerides levels is shown. This type of plot is appropriate for reporting. Dashed lines represent 95\% confidence intervals for the measure.}
 \label{fig:gluco}
 \end{center}
 \end{figure}
@@ -623,13 +638,14 @@ The function \Robject{effectInfo} indicates that, under the fitted model, there 
 effectInfo(modglucose)
 @
 
-<<echo = F>>==
+<<echo=FALSE>>==
 # 2.5 and 97.5 percentiles of trigli (for text):
 summtrigli <- quantile(glucose$trigly, probs = c(2.5, 25, 50, 75, 97.5) / 100)
 trigli2.5 <- round(as.numeric(summtrigli[1]), 1)
 trigli97.5 <- round(as.numeric(summtrigli[5]), 1)
 @
-Indeed, for general transformations it is not possible to find a summary measure that works for all values of $X$ and its change. In such cases, we can create tables with the four possible combinations that result when considering both additive and multiplicative changes in both $X$ and $Y$. These tables should report the effects for several basal values of $X$ along the observed range \cite{Elswick1997}. For instance, the 2.5th and 97.5th percentiles of triglycerides level were \Sexpr{round(trigli2.5)} mg/dl and \Sexpr{round(trigli97.5)} mg/dl, respectively. Thus, we can report the effects between pairs of consecutive values of $X = 50, 100, 150, 200$ and 250 mg/dl, that is to say, for an additive increase of $c = 50$ mg/dl, and also between pairs of consecutive values: 50, 75, 112.5, 168.8 and 253.1 mg/dl, that is, for an $r = 50\%$ increase:
+
+Indeed, for general transformations it is not possible to find a summary measure that works for all values of $X$ and its change. In such cases, we can create tables with the four possible combinations that result when considering both additive and multiplicative changes in both $X$ and $Y$. These tables should report the effects for several basal values of $X$ along the observed range\cite{Elswick1997}. For instance, the 2.5th and 97.5th percentiles of triglycerides level were \Sexpr{round(trigli2.5)} mg/dl and \Sexpr{round(trigli97.5)} mg/dl, respectively. Thus, we can report the effects between pairs of consecutive values of $X = 50, 100, 150, 200$ and 250 mg/dl, that is to say, for an additive increase of $c = 50$ mg/dl, and also between pairs of consecutive values: 50, 75, 112.5, 168.8 and 253.1 mg/dl, that is, for an $r = 50\%$ increase:
 
 <<>>=
 # Effects for an additive change in triglycerides level:
@@ -718,11 +734,11 @@ Exploring previous results, one can see that the more easily interpretable effec
 %%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Logistic regression model with log transformation in the explanatory variable}
-Revisiting the cotinine example -section \ref{sec:cot}-, supose we are now interested in the association between low birth weight -defined as weight lower than 2500 g-, $Y$, and cotinine level, $X$, after log transforming $X$. The model can be fitted as follows:
+Revisiting the cotinine example (Section \ref{sec:cot}), supose we are now interested in the association between low birth weight (defined as weight lower than 2500 g), $Y$, and cotinine level, $X$, after log transforming $X$. The model can be fitted as follows:
 <<>>=
-modcot2 <- tlm(y = underweight, x = logcotinine, data = cotinine, xpow = 0, family = binomial)
+modcot2 <- tlm(underweight ~ logcotinine, family = binomial, data = cotinine, xpow = 0)
 @
-where \Robject{xpow = 0} indicates that the explanatory variable is already log transformed and the argument \Robject{family = binomial} indicates that the regression model is logistic with logit link (default is \Robject{family = gaussian}, for the lineal regression model). The fitted model provides the following results:
+\noindent where \Robject{xpow = 0} indicates that the explanatory variable is already log transformed and the argument \Robject{family = binomial} indicates that the regression model is logistic with logit link (default is \Robject{family = gaussian}, for the lineal regression model). The fitted model provides the following results:
 <<>>=
 summary(modcot2)
 @
@@ -733,27 +749,20 @@ MY(modcot2)
 @
 
 A graphical representation of the relationship between cotinine level and low birth weight can be obtained by:
-<<eval = F>>=
+<<plotcot2, eval=FALSE>>=
 plot(modcot2, type = "transformed", xname = "Cotinine (ng/ml) levels",
      yname = "low birth weight")
-plot(modcot2, xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
-@
-<<plotcot2trans, echo = F, eval = F>>=
-plot(modcot2, type = "transformed", xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
-@
-<<plotcot2, echo = F, eval = F>>=
 plot(modcot2, xname = "Cotinine (ng/ml) levels", yname = "low birth weight")
 @
 which provides Figure \ref{fig:cot2}.
 
 \begin{figure}[h!]
 \begin{center}
-<<echo = F, fig.width=8, fig.height=4.5>>=
+<<echo=FALSE, fig.width=8, fig.height=4.5>>=
 par(las = 1, mfrow = c(1, 2), mar = c(5, 5, 4, 3) + 0.1,  mgp = c(2.8, 0.6, 0))
-<<plotcot2trans>>
 <<plotcot2>>
 @
-\caption{Log odds of low birth weight as a function of log cotinine (left) and probability of low birth weight as a function of cotinine level (right). Dashed lines represent 95\% confidence intervals for the measure.}
+\caption{Visualization of the fitted model \Robject{modcot2}. Left: In the transformed space, the logarithm of the odds of low birth weight as a function of the logarithm of cotinine levels is shown. Note that this plot should not be reported since the logarithm of cotinine levels is meaningless, and the logarithm of the odds is difficult to interpret. This type of plot is intended just to visually explore the model goodness of fit. Right: In the original space, the probability of low birth weight as a function of cotinine levels is shown. This type of plot is appropriate for reporting. Dashed lines represent 95\% confidence intervals for the measure.}
 \label{fig:cot2}
 \end{center}
 \end{figure}
@@ -772,38 +781,63 @@ effect(modcot2, q = 10)
 @
 
 
+\clearpage
 
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
-%     References
-%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%
+%%%%     Bibliography
+%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\bibliographystyle{plain}
-\bibliographystyle{apalike}
-
-
-\begin{thebibliography}{99}
-
-%\bibliography{bayesGen}
-
-\bibitem{Barreratlm2014} Barrera-G\'omez J, Basaga\~na X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17. DOI: 10.1097/EDE.0000000000000247.
-
-
-\bibitem{Rivera2013} Rivera M, Basaga\~na X, Aguilera I, Foraster M, Agis D, de Groot E, Perez L, Mendez MA, Bouso L, Targa J, Ramos R, Sala J, Marrugat J, Elosua R, K\"unzli N. Association between long-term exposure to traffic-related air pollution and subclinical atherosclerosis: The REGICOR study. \emph{Environmental Health Perspectives} 2013;121(2):223-230. DOI:10.1289/ehp.1205146.
-
-\bibitem{Davison1997} Davison AC, Hinkley DV. Bootstrap Methods and their Application. Cambridge Series in Statistical and Probabilistic Mathematics. Cambridge University Press, New York. 1997. ISBN 9780521574716.
-
-\bibitem{Pichini2000} Pichini S, Basaga\~na X, Pacifici R, Garcia O, Puig C, Vall O, Harris J, Zuccaro P, Segura J, Sunyer J. Cord serum cotinine as a biomarker of fetal exposure to cigarette smoke at the end of pregnancy. Environmental Health Perspectives. 2000;108(11):1079-1083.
-
-\bibitem{Basagana2002} Basaga\~na X, Torrent M, Atkinson W, Puig C, Barnes M, Vall O, Jones M, Sunyer J, Cullinan P; AMICS study. Domestic aeroallergen levels in Barcelona and Menorca (Spain). Pediatric Allergy and Immunology. 2002;13(6):412-417.
-
-\bibitem{Searle1980} Searle SR, Speed FM, Milliken GA. Population marginal means in the linear model: An alternative to least squares means. Amer Stat. 1980;34(4):216-221.
-
-\bibitem{Elswick1997} Elswick RK Jr, Schwartz PF, Welsh JA. Interpretation of the odds ratio from logistic regression after a transformation of the covariate vector. Stat Med. 1997;16(15):1695-1703.
-
-\end{thebibliography}
+%\bibliographystyle{apalike}
+\cleardoublepage
+%\phantomsection
+%\addcontentsline{toc}{chapter}{Bibliography}
+\bibliography{bibliography}{}
 
 \end{document}
+
+
+
+
+
+
+% %%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%
+% %     References
+% %%%%%%%%%%%%%%%%%%%%%%%%
+% %%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% %\bibliographystyle{plain}
+% \bibliographystyle{apalike}
+% 
+% 
+% \begin{thebibliography}{99}
+% 
+% %\bibliography{bayesGen}
+% 
+% \bibitem{Barrera2015} Barrera-G\'omez J, Basaga\~na X. Models with transformed variables: interpretation and software. \emph{Epidemiology}. 2015;26(2):e16-17. DOI: 10.1097/EDE.0000000000000247.
+% 
+% \bibitem{Rivera2013} Rivera M, Basaga\~na X, Aguilera I, Foraster M, Agis D, de Groot E, Perez L, Mendez MA, Bouso L, Targa J, Ramos R, Sala J, Marrugat J, Elosua R, K\"unzli N. Association between long-term exposure to traffic-related air pollution and subclinical atherosclerosis: The REGICOR study. \emph{Environmental Health Perspectives} 2013;121(2):223-230. DOI:10.1289/ehp.1205146.
+% 
+% \bibitem{Davison1997} Davison AC, Hinkley DV. Bootstrap Methods and their Application. Cambridge Series in Statistical and Probabilistic Mathematics. Cambridge University Press, New York. 1997. ISBN 9780521574716.
+% 
+% \bibitem{Pichini2000} Pichini S, Basaga\~na X, Pacifici R, Garcia O, Puig C, Vall O, Harris J, Zuccaro P, Segura J, Sunyer J. Cord serum cotinine as a biomarker of fetal exposure to cigarette smoke at the end of pregnancy. Environmental Health Perspectives. 2000;108(11):1079-1083.
+% 
+% \bibitem{Basagana2002} Basaga\~na X, Torrent M, Atkinson W, Puig C, Barnes M, Vall O, Jones M, Sunyer J, Cullinan P; AMICS study. Domestic aeroallergen levels in Barcelona and Menorca (Spain). Pediatric Allergy and Immunology. 2002;13(6):412-417.
+% 
+% \bibitem{Searle1980} Searle SR, Speed FM, Milliken GA. Population marginal means in the linear model: An alternative to least squares means. Amer Stat. 1980;34(4):216-221.
+% 
+% \bibitem{Elswick1997} Elswick RK Jr, Schwartz PF, Welsh JA. Interpretation of the odds ratio from logistic regression after a transformation of the covariate vector. Stat Med. 1997;16(15):1695-1703.
+% 
+% \end{thebibliography}
+% 
+% \end{document}
